@@ -1,3 +1,5 @@
+import MenuManager from './core/menu-manager';
+
 export default class {
   
   constructor() {
@@ -9,7 +11,11 @@ export default class {
   }
 
   receivedEvent(event) {
-    document.getElementById('test').innerHTML = 'test 123456';
+
+    // render menu
+    const menuManager = new MenuManager();
+    document.getElementById('menu_container').innerHTML = menuManager.renderMenu();
+    menuManager.handleMenuActions();    
   }
 
 }
