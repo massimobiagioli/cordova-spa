@@ -7,7 +7,7 @@ export default class {
   }
 
   async renderView(viewId) {        
-    this.currentView = await this.getView(viewId);
+    await this.getView(viewId);
     return this.currentView.renderView();    
   }
 
@@ -15,7 +15,6 @@ export default class {
     const viewFilename = menuItems.find(item => item.id === viewId).filename;            
     const module = await import(/* webpackMode: "eager" */ `../apps/${viewFilename}`);
     this.currentView = new module.default();                                  
-    return this.currentView;
   }
 
   handleViewActions() {
@@ -25,7 +24,7 @@ export default class {
       return;
     }
     btn.addEventListener('click', () => {
-      this.dispatchEvent('Page1', 'onClick', 'Page1_test');
+      this.dispatchEvent('onClick', 'Page1_test');
     })    
   }
 

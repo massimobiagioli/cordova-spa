@@ -1,4 +1,4 @@
-let menuItems = [
+const menuItems = [
   {
     id: 'Page1',
     description: 'Pagina1 di prova',
