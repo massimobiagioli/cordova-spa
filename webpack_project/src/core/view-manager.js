@@ -1,16 +1,21 @@
-import Page1 from '../apps/page1';
-import Page2 from '../apps/page2';
-
-const ClassMap = {
-  Page1,
-  Page2
-};
+import { menuItems } from './app-config';
 
 export default class {
   
-  renderView(viewId) {    
-    this.view = new ClassMap[viewId]();    
-    return this.view.renderView();
+  constructor() {
+    this.currentView = null;
+  }
+
+  async renderView(viewId) {        
+    this.currentView = await this.getView(viewId);
+    return this.currentView.renderView();    
+  }
+
+  async getView(viewId) {    
+    const viewFilename = menuItems.find(item => item.id === viewId).filename;            
+    const module = await import(/* webpackMode: "eager" */ `../apps/${viewFilename}`);
+    this.currentView = new module.default();                                  
+    return this.currentView;
   }
 
   handleViewActions() {
@@ -20,17 +25,17 @@ export default class {
       return;
     }
     btn.addEventListener('click', () => {
-      this.dispatchEvent('onClick', 'Page1_test');
+      this.dispatchEvent('Page1', 'onClick', 'Page1_test');
     })    
   }
 
-  dispatchEvent(event, id) {
+  dispatchEvent(viewId, event, id) {
     try {      
       const eventData = {
         'event': event,
         'id': id
       };
-      this.view.parseEvent(eventData);
+      this.currentView.parseEvent(eventData);      
     } catch (error) {
       console.error(error);
     }

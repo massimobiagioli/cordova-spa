@@ -1,33 +1,28 @@
 import ViewManager from './view-manager';
+import { menuItems } from './app-config';
 
-export default class {
+export default class {  
 
-  constructor() {
-    //TODO: centralizzare
-    this.menuItems = [
-      {
-        id: 'Page1',
-        description: 'Pagina1'
-      },
-      {
-        id: 'Page2',
-        description: 'Pagina2'
-      }
-    ];    
+  constructor() {    
+    this.viewManager = new ViewManager();
   }
 
-  handleMenuActions() {
-    const viewManager = new ViewManager();
-
+  handleMenuActions() {    
     let navLinks = document.querySelectorAll('.nav-link');
     for (let i = 0; i < navLinks.length; i++) {
       navLinks[i].addEventListener('click', e => {
-        e.preventDefault();                        
-        document.getElementById('view_container').innerHTML = viewManager.renderView(e.target.id);      
-        viewManager.handleViewActions();   
-        $('.navbar-collapse').collapse('hide');
+        e.preventDefault();  
+        this.handleMenuAction(e.target.id);
       });
     }
+  }
+
+  handleMenuAction(menuId) {        
+    this.viewManager.renderView(menuId).then(htmlString => {
+      document.getElementById('view_container').innerHTML = htmlString;
+      this.viewManager.handleViewActions();   
+      $('.navbar-collapse').collapse('hide');        
+    });
   }
 
   renderMenu() {
@@ -41,7 +36,7 @@ export default class {
         <div class="collapse navbar-collapse" id="navbarsDefault">
           <ul class="navbar-nav mr-auto">`;
     
-    this.menuItems.forEach(item => {
+    menuItems.forEach(item => {
       str += `
         <li class="nav-item active">
           <a id=${item.id} class="nav-link" href="#">${item.description}<span class="sr-only">(current)</span></a>
