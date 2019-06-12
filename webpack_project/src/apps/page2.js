@@ -1,8 +1,11 @@
+import Page from './page';
 import Backend from '../core/backend';
+import Out from '../core/out';
 
-export default class {
+export default class extends Page {
   
   constructor() {
+    super();
     this.viewName = "page2.html";
   }
 
@@ -19,13 +22,8 @@ export default class {
   }
 
   handshake() {
-    const backend = new Backend();
-    backend.handshake().then(data => document.querySelector('#Page2_handshake_result').innerHTML = JSON.stringify(data));
-  }
-
-  renderView() {    
-    const template = require(`../views/${this.viewName}`);
-    return template();     
+    const backend = new Backend();    
+    backend.handshake().then(data => Out.value('Page2_handshake_result', JSON.stringify(data)));
   }
 
 }
