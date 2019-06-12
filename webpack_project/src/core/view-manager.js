@@ -1,4 +1,4 @@
-import { menuItems } from './app-config';
+import { menuItems } from './app-definition';
 
 export default class {
   
@@ -19,22 +19,24 @@ export default class {
 
   handleViewActions() {
     // TODO: Questo metodo va reso generico ...
-    const btn = document.querySelector('#Page1_test');
-    if (!btn) {
-      return;
+    const btnTest = document.querySelector('#Page1_test');
+    if (btnTest) {
+      btnTest.addEventListener('click', () => {
+        this.dispatchEvent('onClick', 'Page1_test');
+      })    
     }
-    btn.addEventListener('click', () => {
-      this.dispatchEvent('onClick', 'Page1_test');
-    })    
+
+    const btnHandshake = document.querySelector('#Page2_handshake');
+    if (btnHandshake) {
+      btnHandshake.addEventListener('click', () => {
+        this.dispatchEvent('onClick', 'Page2_handshake');
+      })    
+    }    
   }
 
-  dispatchEvent(viewId, event, id) {
-    try {      
-      const eventData = {
-        'event': event,
-        'id': id
-      };
-      this.currentView.parseEvent(eventData);      
+  dispatchEvent(event, id) {
+    try {           
+      this.currentView.parseEvent({ event, id });      
     } catch (error) {
       console.error(error);
     }

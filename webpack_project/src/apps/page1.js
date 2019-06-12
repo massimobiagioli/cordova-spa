@@ -1,7 +1,7 @@
 export default class {
   
   constructor() {
-    this.viewSrc = require("html-loader!../views/page1.html");
+    this.viewName = "page1.html";
   }
 
   parseEvent(eventData) {
@@ -9,7 +9,8 @@ export default class {
   }
 
   renderView() {    
-    return this.viewSrc;    
+    const template = require(`../views/${this.viewName}`);
+    return template();     
   }
 
 }

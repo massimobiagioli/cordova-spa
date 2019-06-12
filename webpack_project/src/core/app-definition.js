@@ -1,12 +1,12 @@
 const menuItems = [
   {
     id: 'Page1',
-    description: 'Pagina1 di prova',
+    description: 'Utilizzo Out',
     filename: 'page1'
   },
   {
     id: 'Page2',
-    description: 'Pagina2 di prova',
+    description: 'Chiamata WS REST',
     filename: 'page2'
   }
 ];
